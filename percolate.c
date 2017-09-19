@@ -36,9 +36,11 @@ void permutation()
   }
 }
 
-//find path and cluster '
-by doing DFS or recursive
-int findpath(){
+//find path and cluster recursively
+int get_cluster(){
+  (ptr[i]<0) 
+  return i;
+  return ptr[i] = findroot(ptr[i]);
 
 }
 

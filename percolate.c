@@ -40,7 +40,7 @@ void permutation()
 int get_cluster(){
   (ptr[i]<0) 
   return i;
-  return ptr[i] = findroot(ptr[i]);
+  return ptr[i] = get_cluster(ptr[i]);
 
 }
 

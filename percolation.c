@@ -70,9 +70,10 @@ int main(int argc, char *argv[]){
         for (long int j = 0; j < grid_size_n; j++) {
             if (lattice[i][j].occupancy_probability <= seed_probability_p) {
                 lattice[i][j].occupied = true;
-                printf("%d ", lattice[i][j].occupied);
+                //printf("%d ", lattice[i][j].occupied);
+                printf("+ ");
             } else {
-                printf(" ");
+                printf("  ");
             }
         }
         printf("\n");

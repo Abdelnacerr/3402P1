@@ -26,12 +26,10 @@ int main(int argc, char *argv[]){
 
     //save seed probability p and grid size n
     float seed_probability_p;
-    sscanf(argv[1], "%f", &seed_probability_p);
-    
-    printf("seed probability p: %f\n", seed_probability_p);
-    //long int grid_size_n = (long int) atoi(argv[2]);
     long int grid_size_n;
+    sscanf(argv[1], "%f", &seed_probability_p);
     sscanf(argv[2], "%ld", &grid_size_n);
+    printf("seed probability p: %f \t n^n grid size n: %ld\n", seed_probability_p, grid_size_n);
     
     //define struct grid_point
     struct grid_point{
@@ -61,9 +59,9 @@ int main(int argc, char *argv[]){
     for (long int i = 0; i < grid_size_n; i++) {
         for (long int j = 0; j < grid_size_n; j++) {
             lattice[i][j].occupancy_probability = (double) (rand() % 100 * 0.01);
-            printf("%1.2f ", lattice[i][j].occupancy_probability);
+            //printf("%1.2f ", lattice[i][j].occupancy_probability);
         }
-        printf("\n");
+        //printf("\n");
     }
 
     for (long int i = 0; i < grid_size_n; i++) {

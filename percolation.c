@@ -29,7 +29,9 @@ int main(int argc, char *argv[]){
     sscanf(argv[1], "%f", &seed_probability_p);
     
     printf("seed probability p: %f\n", seed_probability_p);
-    long int grid_size_n = (long int) atoi(argv[2]);
+    //long int grid_size_n = (long int) atoi(argv[2]);
+    long int grid_size_n;
+    sscanf(argv[2], "%ld", &grid_size_n);
     
     //define struct grid_point
     struct grid_point{
@@ -68,8 +70,10 @@ int main(int argc, char *argv[]){
         for (long int j = 0; j < grid_size_n; j++) {
             if (lattice[i][j].occupancy_probability <= seed_probability_p) {
                 lattice[i][j].occupied = true;
+                printf("%d ", lattice[i][j].occupied);
+            } else {
+                printf(" ");
             }
-            printf("%d ", lattice[i][j].occupied);
         }
         printf("\n");
     }

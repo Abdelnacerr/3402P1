@@ -9,7 +9,6 @@
 #include <time.h>
 #include <sys/time.h>
 #include <stdbool.h>
-#include <string.h>
 
 //#define
 //void function(void param){};
@@ -25,11 +24,8 @@ int main(int argc, char *argv[]){
     gettimeofday(&time_start, NULL);
 
     //save seed probability p and grid size n
-    float seed_probability_p;
-    long int grid_size_n;
-    sscanf(argv[1], "%f", &seed_probability_p);
-    sscanf(argv[2], "%ld", &grid_size_n);
-    printf("seed probability p: %f \t n^n grid size n: %ld\n", seed_probability_p, grid_size_n);
+    double seed_probability_p = (double) atoi(argv[1]);
+    long int grid_size_n = (long int) atoi(argv[2]);
     
     //define struct grid_point
     struct grid_point{
@@ -59,20 +55,16 @@ int main(int argc, char *argv[]){
     for (long int i = 0; i < grid_size_n; i++) {
         for (long int j = 0; j < grid_size_n; j++) {
             lattice[i][j].occupancy_probability = (double) (rand() % 100 * 0.01);
-            //printf("%1.2f ", lattice[i][j].occupancy_probability);
         }
-        //printf("\n");
     }
 
     for (long int i = 0; i < grid_size_n; i++) {
         for (long int j = 0; j < grid_size_n; j++) {
+            printf("%1.2f ", lattice[i][j].occupancy_probability);
             if (lattice[i][j].occupancy_probability <= seed_probability_p) {
                 lattice[i][j].occupied = true;
-                //printf("%d ", lattice[i][j].occupied);
-                printf("+ ");
-            } else {
-                printf("  ");
             }
+            printf("%d ", lattice[i][j].occupied);
         }
         printf("\n");
     }
@@ -81,7 +73,6 @@ int main(int argc, char *argv[]){
     //recursion algorithm or depth first searching
 //largest cluster?
     //size variable
-
 //time_end
     gettimeofday(&time_end, NULL);
     //time_spent

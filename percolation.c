@@ -9,13 +9,14 @@
 #include <time.h>
 #include <sys/time.h>
 #include <stdbool.h>
+#include <string.h>
 
 //#define
 //void function(void param){};
 
 int main(int argc, char *argv[]){
     if (argc != 3) {
-        fprintf(stderr, "Usage: %s [seed_probability_p] [grid_size_n_in_n^2]\n", argv[0]);
+        fprintf(stderr, "Usage: %s [site_probability_p] [grid_size_n_in_n^2]\n", argv[0]);
         exit(EXIT_FAILURE);
     }
 
@@ -23,9 +24,12 @@ int main(int argc, char *argv[]){
     struct timeval time_start, time_end;
     gettimeofday(&time_start, NULL);
 
-    //save seed probability p and grid size n
-    double seed_probability_p = (double) atoi(argv[1]);
-    long int grid_size_n = (long int) atoi(argv[2]);
+    //save sit probability p and grid size n
+    float site_probability_p;
+    long int grid_size_n;
+    sscanf(argv[1], "%f", &site_probability_p);
+    sscanf(argv[2], "%ld", &grid_size_n);
+    printf("site probability p: %f \t n^n grid size n: %ld\n", site_probability_p, grid_size_n);
     
     //define struct grid_point
     struct grid_point{
@@ -55,28 +59,37 @@ int main(int argc, char *argv[]){
     for (long int i = 0; i < grid_size_n; i++) {
         for (long int j = 0; j < grid_size_n; j++) {
             lattice[i][j].occupancy_probability = (double) (rand() % 100 * 0.01);
+            //printf("%1.2f ", lattice[i][j].occupancy_probability);
         }
+        //printf("\n");
     }
 
     for (long int i = 0; i < grid_size_n; i++) {
         for (long int j = 0; j < grid_size_n; j++) {
-            printf("%1.2f ", lattice[i][j].occupancy_probability);
-            if (lattice[i][j].occupancy_probability <= seed_probability_p) {
+            if (lattice[i][j].occupancy_probability <= site_probability_p) {
                 lattice[i][j].occupied = true;
+                //printf("%d ", lattice[i][j].occupied);
+                printf("+");
+            } else {
+                printf(" ");
             }
-            printf("%d ", lattice[i][j].occupied);
         }
         printf("\n");
     }
     
 //does it percolate?
     //recursion algorithm or depth first searching
+    //start at a row "top" and find occupied sites
+        //call cluster finder function on each of these
+            //if occupied neighbour, add it to the cluster/increment size
 //largest cluster?
     //size variable
+
 //time_end
     gettimeofday(&time_end, NULL);
     //time_spent
     float time_spent = ((time_end.tv_sec - time_start.tv_sec) * 1000000u
                      + (time_end.tv_usec - time_start.tv_usec)) / 1.e6;
     printf("time spent = %6.20f\n", time_spent);
+    return 0;
 }

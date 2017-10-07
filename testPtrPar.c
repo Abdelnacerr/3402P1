@@ -31,11 +31,11 @@ void flow2(long int n, long int i, long int j, bool (*b_arr_occ)[n], bool (*b_ar
     //base cases
     //NOTE: for wrap arounds is it valid? i and j need to be mod by n?
     
-    i = i % n;
-    j = j % n;
+    //i = i % n;
+    //j = j % n;
 
-    //if (i < 0 || i >= n) return;    // invalid row
-    //if (j < 0 || j >= n) return;    // invalid column
+    if (i < 0 || i >= n) return;    // invalid row
+    if (j < 0 || j >= n) return;    // invalid column
     if (b_arr_occ[i][j] == false) return;  // not an open site
     if (b_arr_full[i][j] == true) return;       // already marked as full
 
@@ -64,12 +64,12 @@ bool percolates(long int n, bool (*b_arr_full)[n]){
     for (j = 0; j < n; j++){
         //as soon as a full site is found at the "bottom"
         if (b_arr_full[n-1][j] == true){
-            printf("we found a full site\n");
+            printf("full site found!\n");
             return true;
         }
     }
     //no full sites at the bottom
-    printf("we didn't find any full sites\n");
+    printf("no full site found!\n");
     return false;
 }
 
@@ -84,11 +84,11 @@ int main (int argc, char *argv[]){
     struct timeval time_start, time_end;
     gettimeofday(&time_start, NULL);
 
-    float seed_prob_p;
+    double seed_prob_p;
     long int grid_size_n;
-    sscanf(argv[2], "%f", &seed_prob_p);
+    sscanf(argv[2], "%lf", &seed_prob_p);
     sscanf(argv[3], "%ld", &grid_size_n);
-    printf("seeding probability p: %f \t n^n grid size n: %ld\n", seed_prob_p, grid_size_n);
+    printf("seeding probability p: %lf \t n^n grid size n: %ld\n", seed_prob_p, grid_size_n);
     
     //if malloc - dynamically allocate is_occupied and is_full
     bool is_occupied[grid_size_n][grid_size_n];
@@ -104,7 +104,7 @@ int main (int argc, char *argv[]){
 
     //seed lattice sites
     srand(time(NULL));
-    omp_set_num_threads(4);
+    //omp_set_num_threads(4);
     #pragma omp parallel
     {
         #pragma omp for 
@@ -118,10 +118,11 @@ int main (int argc, char *argv[]){
     } //parallel block end
 
     //function calls and conclusion to percolates?
-    display(grid_size_n, grid_size_n, is_occupied);
+    //display(grid_size_n, grid_size_n, is_occupied);
     flow(grid_size_n, is_occupied, is_full);
-    display(grid_size_n, grid_size_n, is_full);
+    //display(grid_size_n, grid_size_n, is_full);
     bool perc = percolates(grid_size_n, is_full);
+    printf("parallel\n");
     printf("The lattice percolates: %d\n", perc);
 
 //time_end
@@ -130,6 +131,6 @@ int main (int argc, char *argv[]){
 //time_spent
     float time_spent = ((time_end.tv_sec - time_start.tv_sec) * 1000000u
                     + (time_end.tv_usec - time_start.tv_usec)) / 1.e6;
-    printf("time spent = %6.20f\n", time_spent);
+    printf("time spent = %6.30f\n", time_spent);
     return 0;
 }

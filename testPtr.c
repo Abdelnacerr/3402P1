@@ -29,10 +29,10 @@ void display(long int m, long int n, bool (*b_arr)[n]){
 void flow2(long int n, long int i, long int j, bool (*b_arr_occ)[n], bool (*b_arr_full)[n]){
     //base cases
     //NOTE: for wrap arounds is it valid? i and j need to be abs() and mod by n?
-    i = abs(i) % n;
+    //i = abs(i) % n;
     //j = abs(j) % n;
 
-    //if (i < 0 || i >= n) return;    // invalid row
+    if (i < 0 || i >= n) return;    // invalid row
     if (j < 0 || j >= n) return;    // invalid column
     if (b_arr_occ[i][j] == false) return;  // not an open site
     if (b_arr_full[i][j] == true) return;  // already marked as full
@@ -62,12 +62,12 @@ bool percolates(long int n, bool (*b_arr_full)[n]){
     for (j = 0; j < n; j++){
         //as soon as a full site is found at the "bottom"
         if (b_arr_full[n-1][j] == true){
-            printf("we found a full site\n");
+            printf("full site found\n");
             return true;
         }
     }
     //no full sites at the bottom
-    printf("we didn't find any full sites\n");
+    printf("no full site found\n");
     return false;
 }
 
@@ -82,11 +82,11 @@ int main (int argc, char *argv[]){
     gettimeofday(&time_start, NULL);
 
 //code to be timed - start//
-    float seed_prob_p;
+    double seed_prob_p;
     long int grid_size_n;
-    sscanf(argv[2], "%f", &seed_prob_p);
+    sscanf(argv[2], "%lf", &seed_prob_p);
     sscanf(argv[3], "%ld", &grid_size_n);
-    printf("seeding probability p: %f \t n^n grid size n: %ld\n", seed_prob_p, grid_size_n);
+    printf("seeding probability p: %lf \t n^n grid size n: %ld\n", seed_prob_p, grid_size_n);
 
     //if malloc - dynamically allocate is_occupied and is_full
     bool is_occupied[grid_size_n][grid_size_n];
@@ -111,10 +111,11 @@ int main (int argc, char *argv[]){
     }
 
     //function calls and conclusion to percolates?
-    display(grid_size_n, grid_size_n, is_occupied);
+    //display(grid_size_n, grid_size_n, is_occupied);
     flow(grid_size_n, is_occupied, is_full);
-    display(grid_size_n, grid_size_n, is_full);
+    //display(grid_size_n, grid_size_n, is_full);
     bool perc = percolates(grid_size_n, is_full);
+    printf("sequential\n");
     printf("The lattice percolates: %d\n", perc);
 
 

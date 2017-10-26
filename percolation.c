@@ -7,7 +7,7 @@
 int dr[] = {1,0,-1,0};
 int dc[] = {0,1,0,-1};
 
-int N; //Lattice Size
+int N; //Lattice Size - THIS PART NEEDS TO BE CHANGED TO LONG INT, AS WELL AS ALL DATA STRUCTURES THAT USE THIS.
 float P; //Percolation Seed Probability
 char PT; //Percolation type, 's' or 'b'
 int LC, LC_N;
@@ -61,7 +61,7 @@ void display_int(int **arr){
 	int i,j;
 	for(i=0;i<N;i++){
 		for(j=0;j<N;j++){
-			printf("%d ", arr[i][j]);
+			printf("%3d ", arr[i][j]);
 		}
 		printf("\n");
 	}
@@ -71,7 +71,7 @@ void display_bool(bool **arr){
 	int i,j;
 	for(i=0;i<N;i++){
 		for(j=0;j<N;j++){
-			printf("%d ", arr[i][j]);
+			printf("%3d ", arr[i][j]);
 		}
 		printf("\n");
 	}
